@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
-	"gopkg.in/toast.v1"
-	"gopkg.in/urfave/cli.v1"
+	"github.com/godoes/toast"
+	"github.com/urfave/cli/v2"
 )
 
 func main() {
@@ -16,61 +16,61 @@ func main() {
 	app.Usage = "Windows 10 toasts"
 	app.Version = "v1"
 	app.Compiled = time.Now()
-	app.Authors = []cli.Author{
-		cli.Author{
+	app.Authors = []*cli.Author{
+		{
 			Name:  "Jacob Marshall",
 			Email: "go-toast@jacobmarshall.co",
 		},
 	}
 
 	app.Flags = []cli.Flag{
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  "app-id, id",
 			Usage: "the app identifier (used for grouping multiple toasts)",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  "title, t",
 			Usage: "the main toast title/heading",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  "message, m",
 			Usage: "the toast's main message (new lines as separator)",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  "icon, i",
 			Usage: "the app icon path (displays to the left of the toast)",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  "activation-type",
 			Value: "protocol",
 			Usage: "the type of action to invoke when the user clicks the toast",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  "activation-arg",
 			Usage: "the activation argument",
 		},
-		cli.StringSliceFlag{
+		&cli.StringSliceFlag{
 			Name:  "action",
 			Usage: "optional action button",
 		},
-		cli.StringSliceFlag{
+		&cli.StringSliceFlag{
 			Name:  "action-type",
 			Usage: "the type of action button",
 		},
-		cli.StringSliceFlag{
+		&cli.StringSliceFlag{
 			Name:  "action-arg",
 			Usage: "the action button argument",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  "audio",
 			Value: "silent",
 			Usage: "which kind of audio should be played",
 		},
-		cli.BoolFlag{
+		&cli.BoolFlag{
 			Name:  "loop",
 			Usage: "whether to loop the audio",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  "duration",
 			Value: "short",
 			Usage: "how long the toast should display for",
@@ -94,7 +94,7 @@ func main() {
 		actionArgs := c.StringSlice("action-arg")
 
 		for index, actionLabel := range actionTexts {
-			var actionType string = "protocol"
+			var actionType = "protocol"
 			var actionArg string
 			if len(actionTypes) > index {
 				actionType = actionTypes[index]
@@ -129,5 +129,8 @@ func main() {
 		return nil
 	}
 
-	app.Run(os.Args)
+	err := app.Run(os.Args)
+	if err != nil {
+		log.Println(err)
+	}
 }

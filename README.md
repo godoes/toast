@@ -20,20 +20,20 @@ C:\Users\Example\Downloads\toast64.exe \
   --duration "long" \
   --activation-arg "https://google.com" \
   --action "Open maps" --action-arg "bingmaps:?q=sushi" \
-  --action "Open browser" --action-arg "http://..."
+  --action "Open browser" --action-arg "https://..."
 ```
 
 ![CLI](./screenshot-cli.png)
 
 ## Example
 
-```go
+```shell
 package main
 
 import (
     "log"
 
-    "gopkg.in/toast.v1"
+    "github.com/godoes/toast"
 )
 
 func main() {
